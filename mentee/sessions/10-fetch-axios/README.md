@@ -3,7 +3,7 @@
 **Read before class. ~15 minutes.** This is the heaviest reading in the course. Take it in two sittings if you need to.
 **Two things to do at the bottom — plus the M3 API brief.**
 
-> Request methods, status codes, sending data with POST, and the full fetch/axios comparison are in `REFERENCE.md`. This file is about *time* — the one genuinely new idea — and *the pattern for getting data from somewhere else*.
+> Request methods, status codes, sending data with POST, and the full fetch/axios comparison are in `REFERENCE.md`. This file is about _time_ — the one genuinely new idea — and _the pattern for getting data from somewhere else_.
 
 ---
 
@@ -15,7 +15,7 @@ Everything your app knows, so far, you typed in or the user typed in. Real apps 
 - A feed doesn't store every post on your phone. It asks a server for the latest ones.
 - A map asks for map tiles. A shop asks for products and prices. A login form asks a server "is this password right?"
 
-That *asking* is done through an **API** — a URL that, instead of returning a web page for humans, returns **data** for code. Almost always as JSON.
+That _asking_ is done through an **API** — a URL that, instead of returning a web page for humans, returns **data** for code. Almost always as JSON.
 
 Try it now. Paste this into your browser's address bar:
 
@@ -37,7 +37,7 @@ Asking a server is different. The request goes across the internet, the server d
 
 JavaScript **does not stop and wait.** If it did, the whole page would freeze — no clicks, no scrolling, no typing — every time you asked for data.
 
-Instead, you get a **Promise**: an object that means *"I don't have the answer yet, but I promise to have it later."* Think of it as a receipt at a café counter — not the coffee, but a guarantee the coffee's coming.
+Instead, you get a **Promise**: an object that means _"I don't have the answer yet, but I promise to have it later."_ Think of it as a receipt at a café counter — not the coffee, but a guarantee the coffee's coming.
 
 You've already met "code that runs later": in Session 8, a listener's callback ran whenever the user clicked. Same idea here — except what you're waiting for isn't the user, it's the network.
 
@@ -57,7 +57,7 @@ loadTodo();
 
 Two new keywords:
 
-- **`await`** — *"pause **this function** here until the Promise has its answer, then give me the answer."*
+- **`await`** — _"pause **this function** here until the Promise has its answer, then give me the answer."_
 - **`async`** — goes in front of any function that uses `await`. Without it, `await` is a syntax error.
 
 The key word in that definition is **this function**. `await` pauses the function it's inside. **The rest of your program keeps running.** Clicks still work. Other code still runs. When the answer arrives, the function picks up where it paused.
@@ -65,8 +65,8 @@ The key word in that definition is **this function**. `await` pauses the functio
 ### Forget `await`, and you get the receipt instead of the coffee
 
 ```js
-const response = fetch(url);      // no await
-console.log(response);            // Promise { <pending> }
+const response = fetch(url); // no await
+console.log(response); // Promise { <pending> }
 ```
 
 You're holding the Promise, not the answer. When you see `Promise { <pending> }` in your console, or a property of what should be your data is `undefined`, **your first question is: "did I forget an `await`?"**
@@ -74,7 +74,7 @@ You're holding the Promise, not the answer. When you see `Promise { <pending> }`
 ### An `async` function returns a Promise too
 
 ```js
-const result = loadTodo();   // a Promise, not the data
+const result = loadTodo(); // a Promise, not the data
 ```
 
 Whatever an `async` function returns is wrapped in a Promise. To get the actual value out, the caller has to `await` it too — which means the caller has to be `async`. That's normal: waiting spreads upward to whoever needs the result.
@@ -90,7 +90,7 @@ const response = await fetch(url);
 const data = await response.json();
 ```
 
-**Step 1 — `fetch(url)`** gives you a **response** object as soon as the server *starts* replying. It tells you *about* the reply — did it work, what status code — but the body might still be downloading.
+**Step 1 — `fetch(url)`** gives you a **response** object as soon as the server _starts_ replying. It tells you _about_ the reply — did it work, what status code — but the body might still be downloading.
 
 **Step 2 — `response.json()`** waits for the full body and then does exactly what `JSON.parse` did in Session 9: **text → data**. It needs its own `await` because the rest of the body may still be on its way.
 
@@ -104,12 +104,12 @@ Networks fail. Servers break. URLs have typos. Your code has to expect it.
 
 ### Two kinds of failure
 
-| What happens | Example | What `fetch` does |
-|---|---|---|
-| **No answer at all** | User is offline, server doesn't exist, typo in the domain | **Throws an error** |
-| **An answer that says "no"** | 404 not found, 500 server broke | **Doesn't throw.** Gives you a response as if everything's fine |
+| What happens                 | Example                                                   | What `fetch` does                                               |
+| ---------------------------- | --------------------------------------------------------- | --------------------------------------------------------------- |
+| **No answer at all**         | User is offline, server doesn't exist, typo in the domain | **Throws an error**                                             |
+| **An answer that says "no"** | 404 not found, 500 server broke                           | **Doesn't throw.** Gives you a response as if everything's fine |
 
-The second row surprises everyone. A 404 still "succeeds" as far as `fetch` is concerned — a server *did* answer; it just answered "not found." You have to check yourself:
+The second row surprises everyone. A 404 still "succeeds" as far as `fetch` is concerned — a server _did_ answer; it just answered "not found." You have to check yourself:
 
 ```js
 if (!response.ok) {
@@ -131,7 +131,7 @@ try {
 }
 ```
 
-If everything in `try` works, `catch` is skipped. If *anything* inside `try` throws — `fetch` failing, your own `throw`, a bad `JSON.parse` — execution jumps straight to `catch`, and `error` holds what went wrong.
+If everything in `try` works, `catch` is skipped. If _anything_ inside `try` throws — `fetch` failing, your own `throw`, a bad `JSON.parse` — execution jumps straight to `catch`, and `error` holds what went wrong.
 
 Without `try/catch`, a failed request crashes your function and the user sees… nothing. A frozen "Loading…" forever. With it, you decide what the user sees instead.
 
@@ -141,7 +141,7 @@ This also fixes a Session 9 gap: `JSON.parse` on bad text throws. Now you know h
 
 ## 5. Loading and error states are data
 
-While you're waiting, the user needs to see *something*. When it fails, they need to be told. Both are just more **state** — and state goes through Session 8's loop:
+While you're waiting, the user needs to see _something_. When it fails, they need to be told. Both are just more **state** — and state goes through Session 8's loop:
 
 ```js
 let statusMessage = "";
@@ -183,21 +183,21 @@ Here's what your app uses:
 
 Different property names (`completed` vs `isDone`), extra ones you don't care about (`userId`), missing ones you need (`priority`).
 
-**This is always the case with real APIs.** You don't control their shape. So you **translate at the edge**: the moment data arrives, `map` it into your shape (Session 6's *transform*), and the rest of your app never knows the API exists.
+**This is always the case with real APIs.** You don't control their shape. So you **translate at the edge**: the moment data arrives, `map` it into your shape (Session 6's _transform_), and the rest of your app never knows the API exists.
 
 ```js
 const newTasks = todos.map((todo) => ({
   id: Date.now() + todo.id,
   title: todo.title,
   isDone: todo.completed,
-  priority: 3
+  priority: 3,
 }));
 ```
 
 Two details:
 
 - **`({ ... })`** — when an arrow function's short form returns an object, wrap it in parentheses. Without them, JavaScript reads `{` as the start of a function body, not an object. With several properties that's a `SyntaxError: Unexpected token ':'`; with exactly one property it's worse — no error at all, and every item comes back `undefined`.
-- **The id** — once imported, these are *your* tasks, so they get ids from *your* system. Keeping the API's `id` would mean clicking "import" twice gives you two tasks with id `1`, and deleting one deletes both (Session 8).
+- **The id** — once imported, these are _your_ tasks, so they get ids from _your_ system. Keeping the API's `id` would mean clicking "import" twice gives you two tasks with id `1`, and deleting one deletes both (Session 8).
 
 And the first time you use any API: **`console.log` the whole response before you write a single path to it.** Session 4's rule. Don't guess the shape — look at it.
 
@@ -229,17 +229,17 @@ const { data } = await axios.get(url);
 
 ### What's actually different
 
-| | `fetch` | `axios` |
-|---|---|---|
-| Comes from | Built into the browser | Library — must be added |
-| Getting JSON | Two steps: `fetch`, then `.json()` | One step: already in `.data` |
-| 404 / 500 | **Doesn't** throw — check `response.ok` | **Throws** automatically |
-| Sending JSON (POST) | You `JSON.stringify` and set a header | You pass an object; it handles it |
-| Where the data is | Whatever `.json()` returns | Always `response.data` |
+| -------------------- | `fetch`                                 | `axios`                           |
+| -------------------- | --------------------------------------- | --------------------------------- |
+| Comes from           | Built into the browser                  | Library — must be added           |
+| Getting JSON         | Two steps: `fetch`, then `.json()`      | One step: already in `.data`      |
+| 404 / 500            | **Doesn't** throw — check `response.ok` | **Throws** automatically          |
+| Sending JSON (POST)  | You `JSON.stringify` and set a header   | You pass an object; it handles it |
+| Where the data is    | Whatever `.json()` returns              | Always `response.data`            |
 
 **The core is identical:** `async`/`await`, `try`/`catch`, loading and error states, translating the shape. axios just removes two footguns — the second `await`, and the silent 404.
 
-**Why learn both?** Because you'll meet both. `fetch` is everywhere because it's built in. axios is common in React and Node codebases. Knowing what each one does *for* you means neither is magic.
+**Why learn both?** Because you'll meet both. `fetch` is everywhere because it's built in. axios is common in React and Node codebases. Knowing what each one does _for_ you means neither is magic.
 
 ---
 
@@ -269,7 +269,9 @@ async function loadSuggestions() {
   render();
 
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos?_limit=5",
+    );
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
@@ -281,7 +283,7 @@ async function loadSuggestions() {
       id: Date.now() + todo.id,
       title: todo.title,
       isDone: todo.completed,
-      priority: 3
+      priority: 3,
     }));
 
     newTasks.forEach((task) => tasks.push(task));
@@ -312,13 +314,15 @@ async function loadSuggestions() {
   render();
 
   try {
-    const { data } = await axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5");
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/todos?_limit=5",
+    );
 
     const newTasks = data.map((todo) => ({
       id: Date.now() + todo.id,
       title: todo.title,
       isDone: todo.completed,
-      priority: 3
+      priority: 3,
     }));
 
     newTasks.forEach((task) => tasks.push(task));
@@ -335,26 +339,26 @@ async function loadSuggestions() {
 
 The `response.ok` check is gone, and so is `.json()`. Everything else is the same.
 
-Look at where `loadSuggestions` sits: in **data changes**, next to `addTask` and `deleteTask`. It's a data change that happens to take time. It still ends in *change → save → render*.
+Look at where `loadSuggestions` sits: in **data changes**, next to `addTask` and `deleteTask`. It's a data change that happens to take time. It still ends in _change → save → render_.
 
 ---
 
 ## Errors you will hit this week
 
-| What you see | What happened |
-|---|---|
-| `Promise { <pending> }` | Missing `await` |
-| Your data's properties are `undefined`, no error | Missing `await` on `.json()` — you're reading properties off a Promise |
-| `SyntaxError: await is only valid in async functions` | Used `await` in a function without `async` |
-| `Cannot read properties of undefined` on API data | The data isn't the shape you assumed. `console.log` the whole thing first |
-| Page shows nothing on a 404, no error | `fetch` doesn't throw on 404 — check `response.ok` |
-| `TypeError: Failed to fetch` / axios `Network Error` | Offline, wrong URL, or the server's down |
-| Console error mentioning **CORS** | The API doesn't allow requests from browsers. Not your code — pick a different API |
-| `ReferenceError: axios is not defined` | axios script tag missing, or placed *after* `app.js` |
-| `response.json is not a function` (axios) | axios already parsed it — use `response.data` |
-| `SyntaxError: Unexpected token ':'` inside a `map` | Short arrow returning an object without `( )` around it |
-| `.map` gives `undefined`s when building a one-property object | Same cause — with one property there's no error to warn you |
-| "Loading…" never goes away | No `try/catch` — an error stopped the function before it reset the message |
+| What you see                                                  | What happened                                                                      |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `Promise { <pending> }`                                       | Missing `await`                                                                    |
+| Your data's properties are `undefined`, no error              | Missing `await` on `.json()` — you're reading properties off a Promise             |
+| `SyntaxError: await is only valid in async functions`         | Used `await` in a function without `async`                                         |
+| `Cannot read properties of undefined` on API data             | The data isn't the shape you assumed. `console.log` the whole thing first          |
+| Page shows nothing on a 404, no error                         | `fetch` doesn't throw on 404 — check `response.ok`                                 |
+| `TypeError: Failed to fetch` / axios `Network Error`          | Offline, wrong URL, or the server's down                                           |
+| Console error mentioning **CORS**                             | The API doesn't allow requests from browsers. Not your code — pick a different API |
+| `ReferenceError: axios is not defined`                        | axios script tag missing, or placed _after_ `app.js`                               |
+| `response.json is not a function` (axios)                     | axios already parsed it — use `response.data`                                      |
+| `SyntaxError: Unexpected token ':'` inside a `map`            | Short arrow returning an object without `( )` around it                            |
+| `.map` gives `undefined`s when building a one-property object | Same cause — with one property there's no error to warn you                        |
+| "Loading…" never goes away                                    | No `try/catch` — an error stopped the function before it reset the message         |
 
 ---
 
@@ -384,7 +388,13 @@ An API sends this:
 
 ```json
 [
-  { "id": 7, "name": "Coffee", "cost": 3.5, "paid": true, "createdBy": "u_204" },
+  {
+    "id": 7,
+    "name": "Coffee",
+    "cost": 3.5,
+    "paid": true,
+    "createdBy": "u_204"
+  },
   { "id": 8, "name": "Lunch", "cost": 12, "paid": false, "createdBy": "u_204" }
 ]
 ```
@@ -418,6 +428,6 @@ console.log("4: end");
 
 In the form, write:
 
-> I think it logs ___, then ___, then ___, then ___, because ___
+> I think it logs **_, then _**, then **_, then _**, because \_\_\_
 
 There are two separate things going on. Sections 2 and 3 cover them both.
