@@ -2,7 +2,7 @@
 
 **Not a lesson. Don't read this start to finish.**
 
-This is lookup material for the whole course — syntax, tables, lists. When you're mid-build and can't remember what `%` does or which array method returns what, come here. The lesson READMEs explain *why* things exist; this file just tells you *what they are*.
+This is lookup material for the whole course — syntax, tables, lists. When you're mid-build and can't remember what `%` does or which array method returns what, come here. The lesson READMEs explain _why_ things exist; this file just tells you _what they are_.
 
 Sections get added as the course moves. Search with `Ctrl+F` / `Cmd+F`.
 
@@ -37,15 +37,15 @@ Sections get added as the course moves. Search with `Ctrl+F` / `Cmd+F`.
 ## Variables
 
 ```js
-let count = 0;          // can be reassigned
-const limit = 10;       // cannot be reassigned
+let count = 0; // can be reassigned
+const limit = 10; // cannot be reassigned
 ```
 
-| Keyword | Reassign? | Use it |
-|---|---|---|
-| `const` | No | Default. Everything, unless you know it changes |
-| `let` | Yes | Only when the value changes |
-| `var` | Yes | Never. Legacy — recognise it, don't write it |
+| Keyword | Reassign? | Use it                                          |
+| ------- | --------- | ----------------------------------------------- |
+| `const` | No        | Default. Everything, unless you know it changes |
+| `let`   | Yes       | Only when the value changes                     |
+| `var`   | Yes       | Never. Legacy — recognise it, don't write it    |
 
 **Naming:** camelCase (`taskName`). Booleans start with `is`/`has` (`isDone`, `hasDueDate`). Names describe contents.
 
@@ -53,28 +53,28 @@ const limit = 10;       // cannot be reassigned
 
 ## Data types
 
-| Type | Example | `typeof` returns |
-|---|---|---|
-| string | `"Buy milk"`, `'hi'`, `` `hey` `` | `"string"` |
-| number | `42`, `3.5`, `-7` | `"number"` |
-| boolean | `true`, `false` | `"boolean"` |
-| undefined | `undefined` | `"undefined"` |
-| null | `null` | `"object"` ← known JS bug |
+| Type      | Example                           | `typeof` returns          |
+| --------- | --------------------------------- | ------------------------- |
+| string    | `"Buy milk"`, `'hi'`, `` `hey` `` | `"string"`                |
+| number    | `42`, `3.5`, `-7`                 | `"number"`                |
+| boolean   | `true`, `false`                   | `"boolean"`               |
+| undefined | `undefined`                       | `"undefined"`             |
+| null      | `null`                            | `"object"` ← known JS bug |
 
 JavaScript has no separate integer type. `42` and `3.5` are both `number`.
 
 **Checking a type:**
 
 ```js
-typeof value
+typeof value;
 ```
 
 **`null` vs `undefined`:**
 
-| | Means | Usually caused by |
-|---|---|---|
-| `undefined` | Never set | Your own code, or asking for something that doesn't exist |
-| `null` | Deliberately empty | Data from an API or database |
+|             | Means              | Usually caused by                                         |
+| ----------- | ------------------ | --------------------------------------------------------- |
+| `undefined` | Never set          | Your own code, or asking for something that doesn't exist |
+| `null`      | Deliberately empty | Data from an API or database                              |
 
 ---
 
@@ -82,27 +82,27 @@ typeof value
 
 ### Arithmetic
 
-| Operator | Does | Example |
-|---|---|---|
-| `+` | Add (or join strings) | `10 + 3` → `13` |
-| `-` | Subtract | `10 - 3` → `7` |
-| `*` | Multiply | `10 * 3` → `30` |
-| `/` | Divide | `10 / 3` → `3.333...` |
-| `%` | Remainder | `10 % 3` → `1` |
-| `**` | Power | `2 ** 3` → `8` |
+| Operator | Does                  | Example               |
+| -------- | --------------------- | --------------------- |
+| `+`      | Add (or join strings) | `10 + 3` → `13`       |
+| `-`      | Subtract              | `10 - 3` → `7`        |
+| `*`      | Multiply              | `10 * 3` → `30`       |
+| `/`      | Divide                | `10 / 3` → `3.333...` |
+| `%`      | Remainder             | `10 % 3` → `1`        |
+| `**`     | Power                 | `2 ** 3` → `8`        |
 
 Common `%` patterns:
 
 ```js
-n % 2 === 0     // is n even?
-i % 3 === 0     // every 3rd item
+n % 2 === 0; // is n even?
+i % 3 === 0; // every 3rd item
 ```
 
 ### Assignment
 
-| Operator | Same as |
-|---|---|
-| `x = 5` | — |
+| Operator | Same as     |
+| -------- | ----------- |
+| `x = 5`  | —           |
 | `x += 5` | `x = x + 5` |
 | `x -= 5` | `x = x - 5` |
 | `x *= 5` | `x = x * 5` |
@@ -114,42 +114,42 @@ Read right-to-left: evaluate the right side, store the result in the left.
 
 All return `true` or `false`.
 
-| Operator | Means |
-|---|---|
-| `===` | Equal, same type — **use this** |
-| `!==` | Not equal, or different type — **use this** |
-| `==` | Equal after coercion — avoid |
-| `!=` | Not equal after coercion — avoid |
-| `>` `<` | Greater / less than |
-| `>=` `<=` | Greater / less than or equal |
+| Operator  | Means                                       |
+| --------- | ------------------------------------------- |
+| `===`     | Equal, same type — **use this**             |
+| `!==`     | Not equal, or different type — **use this** |
+| `==`      | Equal after coercion — avoid                |
+| `!=`      | Not equal after coercion — avoid            |
+| `>` `<`   | Greater / less than                         |
+| `>=` `<=` | Greater / less than or equal                |
 
 Why `==` is avoided:
 
 ```js
-5 == "5"             // true
-0 == ""              // true
-0 == "0"             // true
-"" == "0"            // false
-null == undefined    // true
+5 == "5"; // true
+0 == ""; // true
+0 == "0"; // true
+"" == "0"; // false
+null == undefined; // true
 ```
 
 ### Logical
 
-| Operator | Means | Example |
-|---|---|---|
-| `&&` | AND — both true | `isDone && isUrgent` |
-| `\|\|` | OR — at least one true | `isDone \|\| isUrgent` |
-| `!` | NOT — flips it | `!isDone` |
+| Operator | Means                  | Example                |
+| -------- | ---------------------- | ---------------------- |
+| `&&`     | AND — both true        | `isDone && isUrgent`   |
+| `\|\|`   | OR — at least one true | `isDone \|\| isUrgent` |
+| `!`      | NOT — flips it         | `!isDone`              |
 
 ### Logical operators as shortcuts
 
 `||` and `&&` don't just return `true`/`false` — they return one of their two **values**.
 
-| Expression | Returns | Common use |
-|---|---|---|
-| `a \|\| b` | `a` if truthy, otherwise `b` | Default value: `title \|\| "Untitled"` |
-| `a && b` | `a` if falsy, otherwise `b` | Only do/show `b` if `a`: `isDone && "✓"` |
-| `a ?? b` | `a` unless it's `null`/`undefined`, otherwise `b` | Default that keeps `0` and `""`: `count ?? 0` |
+| Expression | Returns                                           | Common use                                    |
+| ---------- | ------------------------------------------------- | --------------------------------------------- |
+| `a \|\| b` | `a` if truthy, otherwise `b`                      | Default value: `title \|\| "Untitled"`        |
+| `a && b`   | `a` if falsy, otherwise `b`                       | Only do/show `b` if `a`: `isDone && "✓"`      |
+| `a ?? b`   | `a` unless it's `null`/`undefined`, otherwise `b` | Default that keeps `0` and `""`: `count ?? 0` |
 
 Careful: `count || 10` replaces a real `0` with `10` (truthy/falsy trap). Use `??` when `0` or `""` is a valid value.
 
@@ -162,9 +162,8 @@ Careful: `count || 10` replaces a real `0` with `10` (truthy/falsy trap). Use `?
 **Three quote styles:**
 
 ```js
-"double"
-'single'
-`backtick`     // template literal
+"double";
+"single"`backtick`; // template literal
 ```
 
 **Template literals** — use these. Backticks, `${}` to insert any value:
@@ -179,20 +178,20 @@ They also allow line breaks inside the string, which `"` and `'` don't.
 **Concatenation** with `+` — recognise it, don't write it:
 
 ```js
-"Task: " + name
+"Task: " + name;
 ```
 
 **Type coercion with `+`:** if either side is a string, `+` joins instead of adding.
 
 ```js
-"Task " + 1      // "Task 1"
+"Task " + 1; // "Task 1"
 ```
 
 Other arithmetic operators coerce the other direction:
 
 ```js
-"5" * 2          // 10
-"10" - 1         // 9
+"5" * 2; // 10
+"10" - 1; // 9
 ```
 
 ---
@@ -217,16 +216,16 @@ if (condition) {
 
 ### Truthy and falsy
 
-| Falsy (count as `false`) | Truthy (count as `true`) |
-|---|---|
-| `false` | `true` |
-| `0` | any non-zero number, including negatives |
-| `""` (empty string) | any non-empty string — including `"0"` and `"false"` |
-| `null` | |
-| `undefined` | |
-| `NaN` (not-a-number) | |
+| Falsy (count as `false`) | Truthy (count as `true`)                             |
+| ------------------------ | ---------------------------------------------------- |
+| `false`                  | `true`                                               |
+| `0`                      | any non-zero number, including negatives             |
+| `""` (empty string)      | any non-empty string — including `"0"` and `"false"` |
+| `null`                   |                                                      |
+| `undefined`              |                                                      |
+| `NaN` (not-a-number)     |                                                      |
 
-Use truthy/falsy for *"is there anything here?"* When `0` or `""` is a valid value, compare explicitly:
+Use truthy/falsy for _"is there anything here?"_ When `0` or `""` is a valid value, compare explicitly:
 
 ```js
 if (count === 0) { ... }
@@ -269,11 +268,11 @@ switch (priority) {
 Variables declared with `let` or `const` inside `{ }` only exist inside it.
 
 ```js
-let message = "";        // declare outside
+let message = ""; // declare outside
 if (isDone) {
   message = "Nice work"; // assign inside
 }
-console.log(message);    // available here
+console.log(message); // available here
 ```
 
 ---
@@ -287,7 +286,7 @@ function name(param1, param2) {
   return param1 + param2;
 }
 
-name(1, 2);   // call it — returns 3
+name(1, 2); // call it — returns 3
 ```
 
 ### Arrow function
@@ -306,11 +305,11 @@ const double = (n) => n * 2;
 
 Parentheses around a single parameter are optional (`n => n * 2`). This course keeps them for consistency.
 
-| | Declaration | Arrow |
-|---|---|---|
-| Syntax | `function name() {}` | `const name = () => {}` |
-| Callable before the line it's written on? | Yes (hoisted) | No — `ReferenceError` |
-| Used in this course for | Main named functions | Passing functions into other things (week 3+) |
+|                                           | Declaration          | Arrow                                         |
+| ----------------------------------------- | -------------------- | --------------------------------------------- |
+| Syntax                                    | `function name() {}` | `const name = () => {}`                       |
+| Callable before the line it's written on? | Yes (hoisted)        | No — `ReferenceError`                         |
+| Used in this course for                   | Main named functions | Passing functions into other things (week 3+) |
 
 ### Parameters and arguments
 
@@ -327,8 +326,8 @@ function greet(name = "friend") {
   return `Hello, ${name}`;
 }
 
-greet();        // "Hello, friend"
-greet("Ana");   // "Hello, Ana"
+greet(); // "Hello, friend"
+greet("Ana"); // "Hello, Ana"
 ```
 
 ### `return`
@@ -339,11 +338,11 @@ greet("Ana");   // "Hello, Ana"
 
 `return` vs `console.log`:
 
-| | `return` | `console.log` |
-|---|---|---|
-| Who gets the value | The code that called the function | You, in the console |
-| Can be stored / compared / passed on | Yes | No |
-| Ends the function | Yes | No |
+|                                      | `return`                          | `console.log`       |
+| ------------------------------------ | --------------------------------- | ------------------- |
+| Who gets the value                   | The code that called the function | You, in the console |
+| Can be stored / compared / passed on | Yes                               | No                  |
+| Ends the function                    | Yes                               | No                  |
 
 ### Early return pattern
 
@@ -380,37 +379,37 @@ const tasks = ["Buy milk", "Call bank", "Pay rent"];
 
 ### Access
 
-| Expression | Gives |
-|---|---|
-| `tasks[0]` | First item |
-| `tasks[tasks.length - 1]` | Last item |
-| `tasks[99]` | `undefined` (no error) |
-| `tasks.length` | Number of items |
+| Expression                | Gives                  |
+| ------------------------- | ---------------------- |
+| `tasks[0]`                | First item             |
+| `tasks[tasks.length - 1]` | Last item              |
+| `tasks[99]`               | `undefined` (no error) |
+| `tasks.length`            | Number of items        |
 
 Indexes start at **0**. Last index is always `length - 1`.
 
 ### Change
 
 ```js
-tasks[1] = "Call mum";   // replace an item by index
+tasks[1] = "Call mum"; // replace an item by index
 ```
 
-| Operation | Does | Returns |
-|---|---|---|
-| `tasks.push(item)` | Add to the end | New length |
-| `tasks.pop()` | Remove from the end | The removed item |
-| `tasks.unshift(item)` | Add to the start | New length |
-| `tasks.shift()` | Remove from the start | The removed item |
+| Operation             | Does                  | Returns          |
+| --------------------- | --------------------- | ---------------- |
+| `tasks.push(item)`    | Add to the end        | New length       |
+| `tasks.pop()`         | Remove from the end   | The removed item |
+| `tasks.unshift(item)` | Add to the start      | New length       |
+| `tasks.shift()`       | Remove from the start | The removed item |
 
 All four **change the original array**.
 
 ### Check
 
-| Operation | Returns |
-|---|---|
-| `tasks.includes("Pay rent")` | `true` / `false` |
-| `tasks.indexOf("Pay rent")` | Index, or `-1` if not found |
-| `Array.isArray(value)` | `true` if it's an array |
+| Operation                    | Returns                     |
+| ---------------------------- | --------------------------- |
+| `tasks.includes("Pay rent")` | `true` / `false`            |
+| `tasks.indexOf("Pay rent")`  | Index, or `-1` if not found |
+| `Array.isArray(value)`       | `true` if it's an array     |
 
 `typeof []` returns `"object"` — use `Array.isArray` instead.
 
@@ -422,39 +421,39 @@ All four **change the original array**.
 const task = {
   title: "Buy milk",
   isDone: false,
-  priority: 1
+  priority: 1,
 };
 ```
 
 ### Access
 
-| Expression | Use when |
-|---|---|
-| `task.title` | You know the property name — default |
-| `task["title"]` | Key has spaces/special characters |
-| `task[key]` | The property name is stored in a variable |
-| `task.missing` | Returns `undefined` (no error) |
+| Expression      | Use when                                  |
+| --------------- | ----------------------------------------- |
+| `task.title`    | You know the property name — default      |
+| `task["title"]` | Key has spaces/special characters         |
+| `task[key]`     | The property name is stored in a variable |
+| `task.missing`  | Returns `undefined` (no error)            |
 
 ### Change
 
 ```js
-task.isDone = true;        // update existing
-task.dueDate = "Friday";   // add new
-delete task.dueDate;       // remove
+task.isDone = true; // update existing
+task.dueDate = "Friday"; // add new
+delete task.dueDate; // remove
 ```
 
 ### Check
 
-| Expression | Returns |
-|---|---|
-| `"title" in task` | `true` if the property exists |
-| `Object.keys(task)` | Array of property names |
-| `Object.values(task)` | Array of values |
+| Expression            | Returns                       |
+| --------------------- | ----------------------------- |
+| `"title" in task`     | `true` if the property exists |
+| `Object.keys(task)`   | Array of property names       |
+| `Object.values(task)` | Array of values               |
 
 ### Nested data — reading a path
 
 ```js
-user.tasks[0].tags[1]
+user.tasks[0].tags[1];
 ```
 
 - `[ ]` → pick an item from an **array**
@@ -464,23 +463,23 @@ Lost? `console.log` each step of the path and look at what you're holding.
 
 ### Array vs object
 
-| Array | Object |
-|---|---|
+| Array                        | Object                           |
+| ---------------------------- | -------------------------------- |
 | A **list** of similar things | **One thing** with named details |
-| Order matters | Each value has a name |
-| `tasks[2]` | `task.title` |
+| Order matters                | Each value has a name            |
+| `tasks[2]`                   | `task.title`                     |
 
 ---
 
 ## Copies vs references
 
-| | Numbers, strings, booleans | Arrays, objects |
-|---|---|---|
-| Variable holds | The value itself | A reference (directions) to it |
-| `b = a` | `b` gets a **copy** | `b` points at the **same** thing |
-| Change through `b` | `a` unaffected | `a` sees the change |
-| Passed into a function | Function gets a copy | Function can change the original |
-| `===` compares | Values | Whether it's the **same** object |
+|                        | Numbers, strings, booleans | Arrays, objects                  |
+| ---------------------- | -------------------------- | -------------------------------- |
+| Variable holds         | The value itself           | A reference (directions) to it   |
+| `b = a`                | `b` gets a **copy**        | `b` points at the **same** thing |
+| Change through `b`     | `a` unaffected             | `a` sees the change              |
+| Passed into a function | Function gets a copy       | Function can change the original |
+| `===` compares         | Values                     | Whether it's the **same** object |
 
 `const` on an array or object stops reassignment, **not** changes to its contents.
 
@@ -490,12 +489,12 @@ Lost? `console.log` each step of the path and look at what you're holding.
 
 ### Which loop
 
-| Loop | Use when |
-|---|---|
-| `for...of` | Going through every item in an array — **default** |
-| `for` | You need the index `i`, or to count / step |
-| `while` | You don't know how many times; repeat until a condition changes |
-| `for...in` | Going through an object's property names (rare in this course) |
+| Loop       | Use when                                                        |
+| ---------- | --------------------------------------------------------------- |
+| `for...of` | Going through every item in an array — **default**              |
+| `for`      | You need the index `i`, or to count / step                      |
+| `while`    | You don't know how many times; repeat until a condition changes |
+| `for...in` | Going through an object's property names (rare in this course)  |
 
 ### `for...of`
 
@@ -535,21 +534,21 @@ Gives property **names**. Don't use it on arrays.
 
 ### Control
 
-| Keyword | Does |
-|---|---|
-| `break` | Exit the loop immediately |
+| Keyword    | Does                                            |
+| ---------- | ----------------------------------------------- |
+| `break`    | Exit the loop immediately                       |
 | `continue` | Skip the rest of this iteration, go to the next |
-| `return` | Exit the loop **and** the whole function |
+| `return`   | Exit the loop **and** the whole function        |
 
 ### The five patterns
 
-| Pattern | Before loop | Inside loop | Replaced in S6 by |
-|---|---|---|---|
-| Count | `let count = 0` | `count = count + 1` if match | `filter(...).length` |
-| Sum | `let total = 0` | `total = total + x` | `reduce` |
-| Find | — | `return item` if match | `find` |
-| Filter | `const result = []` | `result.push(item)` if match | `filter` |
-| Transform | `const result = []` | `result.push(changed)` | `map` |
+| Pattern   | Before loop         | Inside loop                  | Replaced in S6 by    |
+| --------- | ------------------- | ---------------------------- | -------------------- |
+| Count     | `let count = 0`     | `count = count + 1` if match | `filter(...).length` |
+| Sum       | `let total = 0`     | `total = total + x`          | `reduce`             |
+| Find      | —                   | `return item` if match       | `find`               |
+| Filter    | `const result = []` | `result.push(item)` if match | `filter`             |
+| Transform | `const result = []` | `result.push(changed)`       | `map`                |
 
 Accumulators go **before** the loop, never inside.
 
@@ -573,13 +572,13 @@ const { title, isDone } = task;
 **Rename:**
 
 ```js
-const { title: taskTitle } = task;   // taskTitle → "Buy milk"
+const { title: taskTitle } = task; // taskTitle → "Buy milk"
 ```
 
 **Default value** if the property is missing:
 
 ```js
-const { dueDate = "No date" } = task;   // "No date"
+const { dueDate = "No date" } = task; // "No date"
 ```
 
 ### Parameter destructuring (the "props" pattern)
@@ -589,7 +588,7 @@ function createTaskElement({ title, isDone }) {
   // title and isDone are ready to use
 }
 
-createTaskElement(task);   // still pass the whole object
+createTaskElement(task); // still pass the whole object
 ```
 
 Defaults work here too: `function f({ priority = 3 })`.
@@ -602,7 +601,7 @@ Building an object from variables with matching names:
 const title = "Buy milk";
 const isDone = false;
 
-const task = { title, isDone };   // { title: title, isDone: isDone }
+const task = { title, isDone }; // { title: title, isDone: isDone }
 ```
 
 ### Array destructuring
@@ -631,25 +630,25 @@ const [tasks, setTasks] = useState([]);
 A callback is a function passed into another function, to be called later.
 
 ```js
-tasks.filter(isOpen);       // ✅ pass the function
-tasks.filter(isOpen());     // ❌ calls it now, with nothing
-tasks.filter((task) => !task.isDone);   // ✅ inline arrow
+tasks.filter(isOpen); // ✅ pass the function
+tasks.filter(isOpen()); // ❌ calls it now, with nothing
+tasks.filter((task) => !task.isDone); // ✅ inline arrow
 ```
 
 Callback receives `(item, index, array)`. You'll almost always only use `item`.
 
 ### Choosing
 
-| Want back | Method | Callback returns | Result |
-|---|---|---|---|
-| New array, same length, changed | `map` | The new item | Array, same length |
-| New array, fewer items | `filter` | `true` / `false` | Array, ≤ length |
-| First matching item | `find` | `true` / `false` | Item or `undefined` |
-| Index of first match | `findIndex` | `true` / `false` | Index or `-1` |
-| Does **any** item match? | `some` | `true` / `false` | `true` / `false` |
-| Do **all** items match? | `every` | `true` / `false` | `true` / `false` |
-| One combined value | `reduce` | New running value | Anything |
-| Nothing — just do something | `forEach` | (ignored) | `undefined` |
+| Want back                       | Method      | Callback returns  | Result              |
+| ------------------------------- | ----------- | ----------------- | ------------------- |
+| New array, same length, changed | `map`       | The new item      | Array, same length  |
+| New array, fewer items          | `filter`    | `true` / `false`  | Array, ≤ length     |
+| First matching item             | `find`      | `true` / `false`  | Item or `undefined` |
+| Index of first match            | `findIndex` | `true` / `false`  | Index or `-1`       |
+| Does **any** item match?        | `some`      | `true` / `false`  | `true` / `false`    |
+| Do **all** items match?         | `every`     | `true` / `false`  | `true` / `false`    |
+| One combined value              | `reduce`    | New running value | Anything            |
+| Nothing — just do something     | `forEach`   | (ignored)         | `undefined`         |
 
 ### Examples
 
@@ -678,31 +677,29 @@ Always give a starting value.
 ### Counting
 
 ```js
-tasks.filter((task) => !task.isDone).length
+tasks.filter((task) => !task.isDone).length;
 ```
 
 ### Chaining
 
 ```js
-tasks
-  .filter((task) => !task.isDone)
-  .map((task) => task.title);
+tasks.filter((task) => !task.isDone).map((task) => task.title);
 ```
 
 Each step receives the previous step's result.
 
 ### Mutating vs non-mutating
 
-| Doesn't change the original | **Changes** the original |
-|---|---|
-| `map`, `filter`, `find`, `findIndex`, `some`, `every`, `reduce`, `forEach`* | `push`, `pop`, `shift`, `unshift`, `sort`, `reverse`, `splice` |
+| Doesn't change the original                                                  | **Changes** the original                                       |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `map`, `filter`, `find`, `findIndex`, `some`, `every`, `reduce`, `forEach`\* | `push`, `pop`, `shift`, `unshift`, `sort`, `reverse`, `splice` |
 
 \* `forEach` doesn't change the array itself — but your callback can, if it edits the items.
 
 ### `sort` — careful
 
 ```js
-tasks.sort((a, b) => a.priority - b.priority);   // lowest priority number first
+tasks.sort((a, b) => a.priority - b.priority); // lowest priority number first
 ```
 
 - **Mutates** the original array
@@ -718,15 +715,15 @@ tasks.sort((a, b) => a.priority - b.priority);   // lowest priority number first
 ### Arrays
 
 ```js
-const more = [...tasks, newTask];      // add to end — new array
-const first = [newTask, ...tasks];     // add to start — new array
-const copy = [...tasks];               // copy
+const more = [...tasks, newTask]; // add to end — new array
+const first = [newTask, ...tasks]; // add to start — new array
+const copy = [...tasks]; // copy
 ```
 
 ### Objects
 
 ```js
-const updated = { ...task, isDone: true };   // copy, then override
+const updated = { ...task, isDone: true }; // copy, then override
 ```
 
 Properties written **after** the spread win.
@@ -737,10 +734,10 @@ Spread makes a new **outer** array or object. Items inside are the **same** refe
 
 ### Updating without mutating (React-ready)
 
-| Action | Code |
-|---|---|
-| Add | `items = [...items, newItem]` |
-| Delete | `items = items.filter((i) => i.id !== id)` |
+| Action     | Code                                                               |
+| ---------- | ------------------------------------------------------------------ |
+| Add        | `items = [...items, newItem]`                                      |
+| Delete     | `items = items.filter((i) => i.id !== id)`                         |
 | Update one | `items = items.map((i) => i.id === id ? { ...i, done: true } : i)` |
 
 React re-renders only when state is a **new** object/array (`===` reference check). Mutating in place → no update, no error.
@@ -759,13 +756,13 @@ React re-renders only when state is a **new** object/array (`===` reference chec
 
 ### Selecting
 
-| Method | Returns | Not found |
-|---|---|---|
-| `document.querySelector("#id")` | First match | `null` |
-| `document.querySelector(".class")` | First match | `null` |
-| `document.querySelector("li")` | First match | `null` |
+| Method                               | Returns                  | Not found      |
+| ------------------------------------ | ------------------------ | -------------- |
+| `document.querySelector("#id")`      | First match              | `null`         |
+| `document.querySelector(".class")`   | First match              | `null`         |
+| `document.querySelector("li")`       | First match              | `null`         |
 | `document.querySelectorAll(".item")` | All matches (a NodeList) | Empty NodeList |
-| `document.getElementById("id")` | Element (no `#`) | `null` |
+| `document.getElementById("id")`      | Element (no `#`)         | `null`         |
 
 `querySelectorAll` returns a NodeList — it has `forEach` and `length`, but not `map`/`filter`.
 
@@ -773,30 +770,30 @@ You can search inside an element too: `list.querySelector("li")`.
 
 ### Reading and changing
 
-| Property / method | Does |
-|---|---|
-| `el.textContent` | Get/set text. **Safe for user data** |
-| `el.innerHTML` | Get/set HTML. **Never with user data** — runs as code |
-| `el.classList.add("x")` | Add a class |
-| `el.classList.remove("x")` | Remove a class |
-| `el.classList.toggle("x")` | Add if missing, remove if present |
-| `el.classList.contains("x")` | `true` / `false` |
-| `el.className = "a b"` | Replace all classes |
-| `el.id = "x"` | Set the id |
-| `el.setAttribute("href", url)` | Set any attribute |
-| `el.getAttribute("href")` | Read any attribute |
-| `el.style.color = "red"` | Inline style — prefer classes |
+| Property / method              | Does                                                  |
+| ------------------------------ | ----------------------------------------------------- |
+| `el.textContent`               | Get/set text. **Safe for user data**                  |
+| `el.innerHTML`                 | Get/set HTML. **Never with user data** — runs as code |
+| `el.classList.add("x")`        | Add a class                                           |
+| `el.classList.remove("x")`     | Remove a class                                        |
+| `el.classList.toggle("x")`     | Add if missing, remove if present                     |
+| `el.classList.contains("x")`   | `true` / `false`                                      |
+| `el.className = "a b"`         | Replace all classes                                   |
+| `el.id = "x"`                  | Set the id                                            |
+| `el.setAttribute("href", url)` | Set any attribute                                     |
+| `el.getAttribute("href")`      | Read any attribute                                    |
+| `el.style.color = "red"`       | Inline style — prefer classes                         |
 
 ### Creating and placing
 
-| Method | Does |
-|---|---|
+| Method                         | Does                                |
+| ------------------------------ | ----------------------------------- |
 | `document.createElement("li")` | Create (in memory, not on the page) |
-| `parent.append(child)` | Add as last child — **now visible** |
-| `parent.prepend(child)` | Add as first child |
-| `el.remove()` | Remove from the page |
-| `parent.textContent = ""` | Remove all children |
-| `parent.replaceChildren()` | Remove all children (alternative) |
+| `parent.append(child)`         | Add as last child — **now visible** |
+| `parent.prepend(child)`        | Add as first child                  |
+| `el.remove()`                  | Remove from the page                |
+| `parent.textContent = ""`      | Remove all children                 |
+| `parent.replaceChildren()`     | Remove all children (alternative)   |
 
 ### The render pattern
 
@@ -806,13 +803,14 @@ const list = document.querySelector("#list");
 function createItemElement({ title }) {
   const item = document.createElement("li");
   item.textContent = title;
-  return item;               // data in, element out
+  return item; // data in, element out
 }
 
 function render() {
-  list.textContent = "";     // 1. clear
-  items.forEach((item) => {  // 2. loop the data
-    list.append(createItemElement(item));   // 3. append
+  list.textContent = ""; // 1. clear
+  items.forEach((item) => {
+    // 2. loop the data
+    list.append(createItemElement(item)); // 3. append
   });
 }
 
@@ -836,41 +834,41 @@ element.addEventListener("eventName", callback);
 ```
 
 ```js
-button.addEventListener("click", handleClick);     // ✅ pass the function
-button.addEventListener("click", handleClick());   // ❌ runs once, now
-button.addEventListener("click", () => doThing(id));   // ✅ arrow when you need arguments
+button.addEventListener("click", handleClick); // ✅ pass the function
+button.addEventListener("click", handleClick()); // ❌ runs once, now
+button.addEventListener("click", () => doThing(id)); // ✅ arrow when you need arguments
 ```
 
 ### Common events
 
-| Event | Fires when | Usually on |
-|---|---|---|
-| `click` | Element is clicked | Buttons, any element |
-| `submit` | Form is submitted (button click **or** Enter) | `<form>` |
-| `input` | Value changes, every keystroke | `<input>`, `<textarea>` |
-| `change` | Value is committed (dropdown picked, checkbox ticked, input loses focus) | `<select>`, checkboxes |
-| `keydown` | A key is pressed | `document`, inputs |
+| Event     | Fires when                                                               | Usually on              |
+| --------- | ------------------------------------------------------------------------ | ----------------------- |
+| `click`   | Element is clicked                                                       | Buttons, any element    |
+| `submit`  | Form is submitted (button click **or** Enter)                            | `<form>`                |
+| `input`   | Value changes, every keystroke                                           | `<input>`, `<textarea>` |
+| `change`  | Value is committed (dropdown picked, checkbox ticked, input loses focus) | `<select>`, checkboxes  |
+| `keydown` | A key is pressed                                                         | `document`, inputs      |
 
 ### The event object
 
 The browser passes it as the callback's first argument.
 
-| Property / method | Gives / does |
-|---|---|
-| `event.preventDefault()` | Stop the default behaviour — **always on form submit** |
-| `event.target` | The element the event happened on |
-| `event.key` | Which key (`"Enter"`, `"Escape"`, `"a"`) — keyboard events |
+| Property / method        | Gives / does                                               |
+| ------------------------ | ---------------------------------------------------------- |
+| `event.preventDefault()` | Stop the default behaviour — **always on form submit**     |
+| `event.target`           | The element the event happened on                          |
+| `event.key`              | Which key (`"Enter"`, `"Escape"`, `"a"`) — keyboard events |
 
 ### Forms and input
 
-| Code | Gives |
-|---|---|
-| `input.value` | Current text — **always a string** |
-| `input.value = ""` | Clear the input |
-| `select.value` | Selected option's `value` — **always a string** |
-| `checkbox.checked` | `true` / `false` |
-| `Number("5")` | `5` — convert a string to a number (`NaN` if it can't) |
-| `"  hi  ".trim()` | `"hi"` — remove spaces from both ends |
+| Code               | Gives                                                  |
+| ------------------ | ------------------------------------------------------ |
+| `input.value`      | Current text — **always a string**                     |
+| `input.value = ""` | Clear the input                                        |
+| `select.value`     | Selected option's `value` — **always a string**        |
+| `checkbox.checked` | `true` / `false`                                       |
+| `Number("5")`      | `5` — convert a string to a number (`NaN` if it can't) |
+| `"  hi  ".trim()`  | `"hi"` — remove spaces from both ends                  |
 
 ### Ids
 
@@ -898,12 +896,12 @@ Inside the function that creates the element. `render` replaces elements, and li
 
 ### localStorage
 
-| Method | Does | Returns |
-|---|---|---|
-| `localStorage.setItem(key, value)` | Save under `key` | — |
-| `localStorage.getItem(key)` | Read | The string, or `null` if never saved |
-| `localStorage.removeItem(key)` | Delete one key | — |
-| `localStorage.clear()` | Delete **everything** for this site | — |
+| Method                             | Does                                | Returns                              |
+| ---------------------------------- | ----------------------------------- | ------------------------------------ |
+| `localStorage.setItem(key, value)` | Save under `key`                    | —                                    |
+| `localStorage.getItem(key)`        | Read                                | The string, or `null` if never saved |
+| `localStorage.removeItem(key)`     | Delete one key                      | —                                    |
+| `localStorage.clear()`             | Delete **everything** for this site | —                                    |
 
 - Stores **strings only**. Anything else is converted — arrays/objects badly
 - Per site, per browser, per device. Not synced anywhere
@@ -917,26 +915,26 @@ Inside the function that creates the element. `render` replaces elements, and li
 
 ### JSON
 
-| Function | Direction | Use |
-|---|---|---|
-| `JSON.stringify(data)` | Data → string | Before saving / sending |
-| `JSON.parse(text)` | String → data | After reading / receiving |
+| Function               | Direction     | Use                       |
+| ---------------------- | ------------- | ------------------------- |
+| `JSON.stringify(data)` | Data → string | Before saving / sending   |
+| `JSON.parse(text)`     | String → data | After reading / receiving |
 
 ```js
-JSON.stringify({ id: 1, title: "Buy milk" })
+JSON.stringify({ id: 1, title: "Buy milk" });
 // '{"id":1,"title":"Buy milk"}'
 
-JSON.parse('{"id":1,"title":"Buy milk"}')
+JSON.parse('{"id":1,"title":"Buy milk"}');
 // { id: 1, title: "Buy milk" }
 ```
 
 JSON rules (what survives the round trip):
 
-| Survives | Doesn't |
-|---|---|
-| Strings, numbers, booleans, `null` | `undefined` — property is dropped |
-| Arrays, plain objects, nested | Functions — dropped |
-| | Object identity — parsed objects are always new |
+| Survives                           | Doesn't                                         |
+| ---------------------------------- | ----------------------------------------------- |
+| Strings, numbers, booleans, `null` | `undefined` — property is dropped               |
+| Arrays, plain objects, nested      | Functions — dropped                             |
+|                                    | Object identity — parsed objects are always new |
 
 Keys and strings must use **double quotes** in JSON text.
 
@@ -976,9 +974,9 @@ async function load() {
 }
 ```
 
-| Keyword | Means |
-|---|---|
-| `await` | Pause **this function** until the Promise resolves; give me the value |
+| Keyword | Means                                                                   |
+| ------- | ----------------------------------------------------------------------- |
+| `await` | Pause **this function** until the Promise resolves; give me the value   |
 | `async` | Required on any function that uses `await`. It always returns a Promise |
 
 Missing `await` → you get `Promise { <pending> }` instead of the value.
@@ -994,7 +992,7 @@ try {
 ```
 
 ```js
-throw new Error("Something went wrong");   // raise an error on purpose
+throw new Error("Something went wrong"); // raise an error on purpose
 ```
 
 ### fetch — GET
@@ -1013,7 +1011,7 @@ const data = await response.json();
 const response = await fetch(url, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ title: "Buy milk" })
+  body: JSON.stringify({ title: "Buy milk" }),
 });
 ```
 
@@ -1033,30 +1031,30 @@ await axios.delete(url);
 
 ### fetch vs axios
 
-| | `fetch` | `axios` |
-|---|---|---|
-| Source | Built into the browser | Library (CDN / npm) |
-| Parse JSON | `await response.json()` | Already done — `response.data` |
-| 4xx / 5xx errors | **Not** thrown — check `response.ok` | Thrown automatically |
-| Send JSON | `JSON.stringify` + header | Pass the object |
-| Status code | `response.status` | `response.status` / `error.response.status` |
+|                  | `fetch`                              | `axios`                                     |
+| ---------------- | ------------------------------------ | ------------------------------------------- |
+| Source           | Built into the browser               | Library (CDN / npm)                         |
+| Parse JSON       | `await response.json()`              | Already done — `response.data`              |
+| 4xx / 5xx errors | **Not** thrown — check `response.ok` | Thrown automatically                        |
+| Send JSON        | `JSON.stringify` + header            | Pass the object                             |
+| Status code      | `response.status`                    | `response.status` / `error.response.status` |
 
 ### Request methods
 
-| Method | Means | Example |
-|---|---|---|
-| `GET` | Read | Get all tasks |
-| `POST` | Create | Add a task |
-| `PUT` / `PATCH` | Update (whole / part) | Edit a task |
-| `DELETE` | Delete | Remove a task |
+| Method          | Means                 | Example       |
+| --------------- | --------------------- | ------------- |
+| `GET`           | Read                  | Get all tasks |
+| `POST`          | Create                | Add a task    |
+| `PUT` / `PATCH` | Update (whole / part) | Edit a task   |
+| `DELETE`        | Delete                | Remove a task |
 
 ### Status codes
 
-| Range | Means | Common |
-|---|---|---|
-| 2xx | Success | `200` OK, `201` Created |
-| 4xx | **Your** request was wrong | `400` bad request, `401` not logged in, `404` not found |
-| 5xx | **The server** broke | `500` server error |
+| Range | Means                      | Common                                                  |
+| ----- | -------------------------- | ------------------------------------------------------- |
+| 2xx   | Success                    | `200` OK, `201` Created                                 |
+| 4xx   | **Your** request was wrong | `400` bad request, `401` not logged in, `404` not found |
+| 5xx   | **The server** broke       | `500` server error                                      |
 
 ### Loading / error pattern
 
@@ -1084,7 +1082,7 @@ async function loadData() {
 ```js
 const items = apiData.map((thing) => ({
   id: thing.id,
-  label: thing.name
+  label: thing.name,
 }));
 ```
 
@@ -1102,15 +1100,15 @@ If the console mentions CORS, the API doesn't accept requests from browser pages
 
 ### The master key — answer in English, in order
 
-| # | Question | Becomes |
-|---|---|---|
-| 1 | What does the user see and do? | Screen + list of actions (verbs) |
-| 2 | What's the data? Write one example item | Your data array |
-| 3 | What changes the data? | One function per action |
-| 4 | How is the data drawn? | `createItemElement` + `render` |
-| 5 | What triggers each change? | Element → event → function |
-| 6 | Does it need to survive a refresh? | `save` / `load` |
-| 7 | Does it need outside data? | API call + translate to your shape |
+| #   | Question                                | Becomes                            |
+| --- | --------------------------------------- | ---------------------------------- |
+| 1   | What does the user see and do?          | Screen + list of actions (verbs)   |
+| 2   | What's the data? Write one example item | Your data array                    |
+| 3   | What changes the data?                  | One function per action            |
+| 4   | How is the data drawn?                  | `createItemElement` + `render`     |
+| 5   | What triggers each change?              | Element → event → function         |
+| 6   | Does it need to survive a refresh?      | `save` / `load`                    |
+| 7   | Does it need outside data?              | API call + translate to your shape |
 
 For each function: what does it need (parameters)? What does it give back or change? Which array method?
 
@@ -1156,13 +1154,13 @@ render();
 3. **Check the loop** — change → save → render. Which link is broken?
 4. **Still stuck? Trace** ten lines on paper. Where your trace and the console disagree is the bug
 
-| Symptom | Likely cause |
-|---|---|
-| Click does nothing | No listener, or `fn()` instead of `fn` |
-| Data changes, page doesn't | `render()` not called |
-| Refresh undoes changes | `save` missing or before the change |
-| Buttons stop after re-render | Listener outside the component |
-| Number maths gives strings | Value came from input / storage — `Number()` |
+| Symptom                      | Likely cause                                 |
+| ---------------------------- | -------------------------------------------- |
+| Click does nothing           | No listener, or `fn()` instead of `fn`       |
+| Data changes, page doesn't   | `render()` not called                        |
+| Refresh undoes changes       | `save` missing or before the change          |
+| Buttons stop after re-render | Listener outside the component               |
+| Number maths gives strings   | Value came from input / storage — `Number()` |
 
 Never change things at random until it works.
 
@@ -1170,11 +1168,11 @@ Never change things at random until it works.
 
 ## Console
 
-| Method | Does |
-|---|---|
-| `console.log(value)` | Print a value |
-| `console.log(a, b)` | Print several, comma-separated |
-| `console.error(value)` | Print as an error (red) |
+| Method                 | Does                                         |
+| ---------------------- | -------------------------------------------- |
+| `console.log(value)`   | Print a value                                |
+| `console.log(a, b)`    | Print several, comma-separated               |
+| `console.error(value)` | Print as an error (red)                      |
 | `console.table(value)` | Print as a table — useful from Arrays onward |
 
 Open it: **F12** or **Cmd+Option+J** (Mac) / **Ctrl+Shift+J** (Windows), then the Console tab.
@@ -1183,48 +1181,48 @@ Open it: **F12** or **Cmd+Option+J** (Mac) / **Ctrl+Shift+J** (Windows), then th
 
 ## Common errors
 
-| Error | Cause |
-|---|---|
-| `ReferenceError: x is not defined` | Variable never declared, or misspelled |
-| `TypeError: Assignment to constant variable` | Reassigned a `const` |
-| `SyntaxError: Identifier 'x' has already been declared` | Declared the same name twice |
-| `SyntaxError: Unexpected token` | Missing bracket, brace, quote or comma |
-| `ReferenceError` on a variable you did declare | Declared inside `{ }`, used outside it |
-| `if` branch always runs, no error | `=` instead of `===` in the condition |
-| `else if` branch never runs, no error | An earlier condition already catches those cases |
-| `undefined` where you expected a value | Function has no `return`, or a path through it doesn't reach one |
-| Logs `ƒ name(...)` / `[Function]` | Missing `()` — referenced the function instead of calling it |
-| `ReferenceError: Cannot access 'x' before initialization` | Used a `const`/`let` (including an arrow function) above the line that creates it |
-| Function "does nothing", no error | Defined but never called |
-| `TypeError: Cannot read properties of undefined (reading 'x')` | Whatever is *before* `.x` is `undefined`. Check the step before |
-| `undefined` from an array or object | Index past the end, or misspelled property name |
-| A value changed that you didn't touch | Two variables reference the same array/object |
-| Count/total resets or stays tiny | Accumulator declared inside the loop |
-| Loop runs only once | `return` inside the loop fired on the first item |
-| Browser tab freezes | Infinite `while` loop |
-| `map` gives an array of `undefined` | Callback doesn't return — check for `{ }` without `return` |
-| Crash inside a callback, or `... is not a function` | Called the callback with `()` instead of passing it |
-| `Cannot read properties of undefined` after `find` | Nothing matched — `find` returned `undefined` |
-| `Cannot read properties of null` | `querySelector` found nothing — selector typo, missing `#`/`.`, or no `defer` |
-| Element created but not visible | Never `append`ed |
-| List duplicates on every render | `render` doesn't clear first |
-| Page shows `[object Object]` | Put a whole object into `textContent` |
-| Handler runs on page load, not on click | `addEventListener("click", fn())` — remove the `()` |
-| Page reloads on submit, data vanishes | Missing `event.preventDefault()` |
-| Data changes but page doesn't | Handler didn't call `render()` |
-| Number comparison fails for user input | `.value` is a string — use `Number()` |
-| Buttons stop working after re-render | Listeners attached outside the element-creating function |
-| `[object Object]` in localStorage | Saved without `JSON.stringify` |
-| `.forEach` / `.map is not a function` after loading | Read without `JSON.parse` |
-| `SyntaxError: Unexpected token ... in JSON` | Parsing text that isn't JSON — clear the key in DevTools |
-| Crash on first visit after adding storage | `getItem` returned `null` and wasn't handled |
-| `Promise { <pending> }` / data properties `undefined` | Missing `await` |
-| `await is only valid in async functions` | Function missing `async` |
-| 404 with `fetch`, no error | Check `response.ok` |
-| `Failed to fetch` / `Network Error` | Offline, wrong URL, server down |
-| CORS error | API blocks browsers — choose another API |
-| `axios is not defined` | Script tag missing or after `app.js` |
-| `.map` building objects returns `undefined` | Arrow returning `{}` needs `({ })` |
-| "Loading…" stuck forever | No `try/catch`, or status not reset |
-| React screen doesn't update after a change | State was mutated (`push`, `obj.x = ...`) instead of replaced |
-| Changing a "copy" changed the original | Spread is shallow — nested objects are shared |
+| Error                                                          | Cause                                                                             |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `ReferenceError: x is not defined`                             | Variable never declared, or misspelled                                            |
+| `TypeError: Assignment to constant variable`                   | Reassigned a `const`                                                              |
+| `SyntaxError: Identifier 'x' has already been declared`        | Declared the same name twice                                                      |
+| `SyntaxError: Unexpected token`                                | Missing bracket, brace, quote or comma                                            |
+| `ReferenceError` on a variable you did declare                 | Declared inside `{ }`, used outside it                                            |
+| `if` branch always runs, no error                              | `=` instead of `===` in the condition                                             |
+| `else if` branch never runs, no error                          | An earlier condition already catches those cases                                  |
+| `undefined` where you expected a value                         | Function has no `return`, or a path through it doesn't reach one                  |
+| Logs `ƒ name(...)` / `[Function]`                              | Missing `()` — referenced the function instead of calling it                      |
+| `ReferenceError: Cannot access 'x' before initialization`      | Used a `const`/`let` (including an arrow function) above the line that creates it |
+| Function "does nothing", no error                              | Defined but never called                                                          |
+| `TypeError: Cannot read properties of undefined (reading 'x')` | Whatever is _before_ `.x` is `undefined`. Check the step before                   |
+| `undefined` from an array or object                            | Index past the end, or misspelled property name                                   |
+| A value changed that you didn't touch                          | Two variables reference the same array/object                                     |
+| Count/total resets or stays tiny                               | Accumulator declared inside the loop                                              |
+| Loop runs only once                                            | `return` inside the loop fired on the first item                                  |
+| Browser tab freezes                                            | Infinite `while` loop                                                             |
+| `map` gives an array of `undefined`                            | Callback doesn't return — check for `{ }` without `return`                        |
+| Crash inside a callback, or `... is not a function`            | Called the callback with `()` instead of passing it                               |
+| `Cannot read properties of undefined` after `find`             | Nothing matched — `find` returned `undefined`                                     |
+| `Cannot read properties of null`                               | `querySelector` found nothing — selector typo, missing `#`/`.`, or no `defer`     |
+| Element created but not visible                                | Never `append`ed                                                                  |
+| List duplicates on every render                                | `render` doesn't clear first                                                      |
+| Page shows `[object Object]`                                   | Put a whole object into `textContent`                                             |
+| Handler runs on page load, not on click                        | `addEventListener("click", fn())` — remove the `()`                               |
+| Page reloads on submit, data vanishes                          | Missing `event.preventDefault()`                                                  |
+| Data changes but page doesn't                                  | Handler didn't call `render()`                                                    |
+| Number comparison fails for user input                         | `.value` is a string — use `Number()`                                             |
+| Buttons stop working after re-render                           | Listeners attached outside the element-creating function                          |
+| `[object Object]` in localStorage                              | Saved without `JSON.stringify`                                                    |
+| `.forEach` / `.map is not a function` after loading            | Read without `JSON.parse`                                                         |
+| `SyntaxError: Unexpected token ... in JSON`                    | Parsing text that isn't JSON — clear the key in DevTools                          |
+| Crash on first visit after adding storage                      | `getItem` returned `null` and wasn't handled                                      |
+| `Promise { <pending> }` / data properties `undefined`          | Missing `await`                                                                   |
+| `await is only valid in async functions`                       | Function missing `async`                                                          |
+| 404 with `fetch`, no error                                     | Check `response.ok`                                                               |
+| `Failed to fetch` / `Network Error`                            | Offline, wrong URL, server down                                                   |
+| CORS error                                                     | API blocks browsers — choose another API                                          |
+| `axios is not defined`                                         | Script tag missing or after `app.js`                                              |
+| `.map` building objects returns `undefined`                    | Arrow returning `{}` needs `({ })`                                                |
+| "Loading…" stuck forever                                       | No `try/catch`, or status not reset                                               |
+| React screen doesn't update after a change                     | State was mutated (`push`, `obj.x = ...`) instead of replaced                     |
+| Changing a "copy" changed the original                         | Spread is shallow — nested objects are shared                                     |
