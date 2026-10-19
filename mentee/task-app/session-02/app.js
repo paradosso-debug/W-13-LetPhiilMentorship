@@ -2,7 +2,7 @@
 // The task gets a status label. "Done" is checked first on purpose.
 
 const taskName = "Buy milk";
-const isDone = false;
+const isDone = true;
 let priority = 1;
 
 let status = "";
@@ -16,3 +16,9 @@ if (isDone) {
 }
 
 console.log(`${taskName}: ${status}`);
+
+// const taskName = "Buy milk";
+// const isDone = false;
+// let priority = 2;
+
+// console.log(`${taskName} — done: ${isDone}, priority ${priority}`);

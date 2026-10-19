@@ -37,16 +37,16 @@ console.log("parsons.js running");
 // C   discount = 10;
 // }
 
-const total = 120;
-let discount = 0;
+// const total = 120;
+// let discount = 0;
 
-if (total > 100) {
-  discount = 20;
-  console.log(`Discount: ${discount}`);
-} else if (total > 50) {
-  discount = 10;
-  console.log(`Discount: ${discount}`);
-}
+// if (total > 100) {
+//   discount = 20;
+//   console.log(`Discount: ${discount}`);
+// } else if (total > 50) {
+//   discount = 10;
+//   console.log(`Discount: ${discount}`);
+// }
 
 // Goul output: "Done"
 
@@ -56,6 +56,8 @@ if (total > 100) {
 // X   const label = isDone ? "To do" : "Done";
 // Y   if (isDone) { const label = "Done"; }
 
-const isDone = true;
+const isDone = false;
 const label = isDone ? "Done" : "To do";
 console.log(label);
+
+//condition ? true : false

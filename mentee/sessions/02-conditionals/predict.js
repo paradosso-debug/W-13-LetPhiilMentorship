@@ -39,33 +39,35 @@ console.log("predict.js running");
 // isStudent: true
 // }
 
-const quantity = " "; // what the input field gives you
+// FALSE, 0, NAN, UNDEFINED, NULL
+
+const quantity = "0"; // what the input field gives you
 const stock = -1;
 
-// if (quantity) {
-//   console.log("A: has quantity");
-// } else {
-//   console.log("A: no quantity");
-// }
+if (quantity) {
+  console.log("A: has quantity");
+} else {
+  console.log("A: no quantity");
+}
 
-// if (stock) {
-//   console.log("B: in stock");
-// } else {
-//   console.log("B: sold out");
-// }
+if (stock) {
+  console.log("B: in stock");
+} else {
+  console.log("B: sold out");
+}
 
-// if (stock === 0) {
-//   console.log("B: sold out");
-// } else {
-//   console.log("B: in sotck");
-// }
+if (stock === 0) {
+  console.log("B: sold out");
+} else {
+  console.log("B: in sotck");
+}
 
 // "0" - truthy
 // 0 - Falsy
 // "" - Falsy
 
 let priority = 1;
-let isDone = false;
+let isDone = true;
 let label = "";
 
 if (isDone) {
