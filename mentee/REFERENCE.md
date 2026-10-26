@@ -29,6 +29,7 @@ Sections get added as the course moves. Search with `Ctrl+F` / `Cmd+F`.
 - [Async, fetch and axios](#async-fetch-and-axios)
 - [Starting a project](#starting-a-project)
 - [Debugging](#debugging)
+- [TypeScript](#typescript)
 - [Console](#console)
 - [Common errors](#common-errors)
 
@@ -1163,6 +1164,171 @@ render();
 | Number maths gives strings   | Value came from input / storage — `Number()` |
 
 Never change things at random until it works.
+
+---
+
+## TypeScript
+
+_(Sessions 13–14. Types are checked before your code runs and are gone by the time it does.)_
+
+### Basic types
+
+```ts
+let count: number = 0;
+let label: string = "Coffee";
+let isPaid: boolean = false;
+```
+
+Usually you don't write these — TypeScript infers them from the value. **Annotate what has no value yet**, mainly function parameters.
+
+### Arrays
+
+```ts
+const titles: string[] = ["Coffee", "Rent"];
+const mixed = [1, "two"]; // inferred: (string | number)[]
+```
+
+### Objects
+
+```ts
+type Expense = {
+  id: number;
+  label: string;
+  amount: number;
+  isPaid: boolean;
+  dueDate?: string; // optional — may be missing
+};
+
+const coffee: Expense = { id: 1, label: "Coffee", amount: 4.5, isPaid: true };
+const expenses: Expense[] = [coffee];
+```
+
+`interface Expense { … }` does the same job for object shapes. You'll see it in React code. **This course uses `type`**, because `type` also does unions and `interface` doesn't.
+
+### Functions
+
+```ts
+function getTotal(expenses: Expense[]): number {
+  return 0;
+}
+
+function render(): void {
+  // returns nothing
+}
+
+const isPopular = (expense: Expense): boolean => expense.amount > 100;
+```
+
+Destructured parameters need the type on the whole parameter:
+
+```ts
+function getStatus({ isPaid, amount }: Expense): string { … }
+```
+
+### Unions, `null` and `undefined`
+
+```ts
+type Status = "paid" | "unpaid"; // only these two strings
+let found: Expense | null = null; // an expense, or nothing
+```
+
+The two you can't avoid:
+
+| Returns                       | When nothing matches |
+| ----------------------------- | -------------------- |
+| `document.querySelector(...)` | `Element \| null`    |
+| `array.find(...)`             | `T \| undefined`     |
+
+Check before reading from them — TypeScript then **narrows** the type inside the check:
+
+```ts
+const found = expenses.find((expense) => expense.id === id);
+if (found) {
+  console.log(found.amount); // no longer possibly undefined
+}
+```
+
+### `as` — telling TypeScript what you know
+
+```ts
+const list = document.querySelector("#list") as HTMLUListElement;
+const input = document.querySelector("#label-input") as HTMLInputElement;
+```
+
+Replaces the whole type, so the `| null` goes too.
+
+**`as` checks nothing.** Misspell the id and TypeScript stays silent — you get the runtime crash you'd have had anyway. Use it for elements you know are in your HTML. **Don't** use it on `find` results or API data.
+
+| Element       | Type                |
+| ------------- | ------------------- |
+| `<ul>`        | `HTMLUListElement`  |
+| `<li>`        | `HTMLLIElement`     |
+| `<input>`     | `HTMLInputElement`  |
+| `<select>`    | `HTMLSelectElement` |
+| `<form>`      | `HTMLFormElement`   |
+| `<button>`    | `HTMLButtonElement` |
+| anything else | `HTMLElement`       |
+
+### `any`
+
+```ts
+let whatever: any = "hello";
+whatever.doesNotExist(); // no complaint
+```
+
+Turns checking off. Reaching for it hides a question rather than answering it.
+
+### Setup
+
+```bash
+npm init -y
+npm install --save-dev typescript
+npx tsc --watch
+```
+
+`tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"]
+}
+```
+
+Your HTML loads the **output**:
+
+```html
+<script type="module" src="dist/app.js" defer></script>
+```
+
+### Common TypeScript errors
+
+| Message                                                        | Cause                                             |
+| -------------------------------------------------------------- | ------------------------------------------------- |
+| `Type 'x' is not assignable to type 'y'`                       | The value doesn't match the type you promised     |
+| `Property 'x' is missing in type ... but required in type 'Y'` | Object is short a property                        |
+| `Object literal may only specify known properties`             | Object has one the type doesn't mention           |
+| `Property 'x' does not exist on type 'Y'. Did you mean 'z'?`   | Typo — and it found the right name                |
+| `'x' is possibly 'null'`                                       | A `querySelector`. Cast or check                  |
+| `'x' is possibly 'undefined'`                                  | A `find`. Check it                                |
+| `Parameter 'x' implicitly has an 'any' type`                   | Annotate the parameter                            |
+| `Binding element 'x' implicitly has an 'any' type`             | Destructured parameter — type the whole parameter |
+| `A function whose declared type is ... must return a value`    | Promised a return, didn't give one                |
+| `Property 'value' does not exist on type 'Element'`            | Cast to `HTMLInputElement`                        |
+| `Cannot use import statement outside a module`                 | Missing `type="module"` on the script tag         |
+
+### What TypeScript does **not** do
+
+- Check anything at runtime — the types are gone
+- Verify that API or storage data matches what you annotated. It believes you
+- Catch logic errors. `total - amount` is perfectly typed and perfectly wrong
 
 ---
 

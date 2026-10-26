@@ -1,7 +1,7 @@
 # Start Here
 
-**JavaScript Fundamentals — 12 sessions, 6 weeks.**
-At the end of it you'll have built a real app, and you'll be ready for React.
+**JavaScript Fundamentals — 14 sessions, 7 weeks.**
+Twelve sessions of JavaScript, then two of TypeScript. At the end of it you'll have built a real app, and you'll be ready for React.
 
 Read this once, before session 1. Ten minutes.
 
@@ -50,11 +50,15 @@ Why that second one matters: **confident and wrong** means you've got a rule in 
 
 **A browser with DevTools** — Chrome, Edge or Firefox. Press **F12** to open them. You'll live in the Console tab.
 
-**Nothing else.** No installs, no frameworks, no build tools. Plain JavaScript in a folder.
+**Nothing else, for sessions 1–13.** No frameworks, no build tools. Plain JavaScript in a folder.
+
+**Session 14 is the exception** — that's TypeScript on your own app, and it needs **Node.js** installed plus a one-off setup. You'll be told about it a full session in advance, and Level 3 needs Node anyway.
 
 **One workflow for the whole course:** a folder with your JavaScript files and one `index.html` that loads whichever one you're working on. Save the file, open `index.html` in a browser, read the Console. To switch files, change one line in the HTML and reload.
 
 For sessions 1–6 the page itself stays blank — everything happens in the console. From session 7 the page is the point, and you'll add `style.css` alongside. Your mentor will set the folder up with you in session 1.
+
+**Where the files come from:** new material lands in the class repo each session. `README.md` explains how to get it — ZIP or git, and which files are actually new each time — plus the one rule that goes with it: **copy the session folder into your own project folder before you work in it.** Work inside the class folder and your code gets overwritten by the next download.
 
 **Don't paste code into the console to run it.** Run the same snippet twice and you'll get `Identifier 'x' has already been declared` — your code is fine, the page just hasn't reloaded. Edit, save, reload instead.
 
@@ -66,11 +70,11 @@ For sessions 1–6 the page itself stays blank — everything happens in the con
 
 **The Expense Tracker** — you build this one, alone. It's the same shape with different data, and it comes in three milestones:
 
-| | Due | What it does by then |
-|---|---|---|
-| **M1** | Session 6 | Runs in the console: your data, and functions that understand it |
-| **M2** | Session 9 | Has a screen. You can add, mark paid and delete |
-| **M3** | Session 11 | Remembers everything after a refresh, and fetches live data |
+|        | Due        | What it does by then                                             |
+| ------ | ---------- | ---------------------------------------------------------------- |
+| **M1** | Session 6  | Runs in the console: your data, and functions that understand it |
+| **M2** | Session 9  | Has a screen. You can add, mark paid and delete                  |
+| **M3** | Session 11 | Remembers everything after a refresh, and fetches live data      |
 
 Each brief arrives when you have the tools for it. Don't start early — you'll be missing the pieces.
 
@@ -87,7 +91,7 @@ Two kinds, and they're different sizes.
 Posted in **#lvl-2-homework-or-exercise-subm** after each session, and due before the next one. Always two small things:
 
 - **A line-ordering puzzle.** You get the right lines, scrambled, usually with a wrong line mixed in. Put them in order and run it
-- **One change to what you built in class.** Predict what it'll do *before* you run it, then run it
+- **One change to what you built in class.** Predict what it'll do _before_ you run it, then run it
 
 They're short on purpose. The point is to touch the ideas again a day later, not to spend an evening on them.
 
@@ -95,22 +99,22 @@ They're short on purpose. The point is to touch the ideas again a day later, not
 
 Not every week — it's staged, with three deadlines:
 
-| Due | What | Mostly worked on |
-|---|---|---|
-| Session 6 | Part 1 — console only | Weeks 2–3 |
-| Session 9 | Part 2 — on screen, working | Week 4 |
-| Session 11 | Part 3 — saves, and fetches live data | Weeks 5–6 |
+| Due        | What                                  | Mostly worked on |
+| ---------- | ------------------------------------- | ---------------- |
+| Session 6  | Part 1 — console only                 | Weeks 2–3        |
+| Session 9  | Part 2 — on screen, working           | Week 4           |
+| Session 11 | Part 3 — saves, and fetches live data | Weeks 5–6        |
 
 Week 1 is almost entirely short exercises. Part 1 only starts after session 4, once you've got the pieces for it.
 
 ### Where everything goes
 
-| What | Where |
-|---|---|
-| Prediction | That session's Google Form — link in the **wave-13** chat |
-| Short exercise | **#lvl-2-homework-or-exercise-subm** |
+| What            | Where                                                                           |
+| --------------- | ------------------------------------------------------------------------------- |
+| Prediction      | That session's Google Form — link in the **wave-13** chat                       |
+| Short exercise  | **#lvl-2-homework-or-exercise-subm**                                            |
 | Expense Tracker | Push to your GitHub repo, post the link in **#lvl-2-homework-or-exercise-subm** |
-| Final project | **#lvl-2-final-projects** |
+| Final project   | **#lvl-2-final-projects**                                                       |
 
 ### These deadlines are real
 
@@ -122,11 +126,11 @@ Each session is built on the one before it. Falling behind on part 1 makes part 
 
 ## The files you have
 
-| File | What it's for |
-|---|---|
-| `lessons/01` … `lessons/12` | One per session. Read before class |
-| `REFERENCE.md` | Syntax lookup for the whole course. **Not for reading start to finish** |
-| `milestones/` | Your app briefs, handed out as you reach them |
+| File                        | What it's for                                                           |
+| --------------------------- | ----------------------------------------------------------------------- |
+| `lessons/01` … `lessons/12` | One per session. Read before class                                      |
+| `REFERENCE.md`              | Syntax lookup for the whole course. **Not for reading start to finish** |
+| `milestones/`               | Your app briefs, handed out as you reach them                           |
 
 **`REFERENCE.md` is meant to be looked up, never memorised.** When you can't remember what `%` does or which method returns what, search it. Professional developers look things up constantly — the skill is knowing what to look for, not holding it all in your head.
 
@@ -154,7 +158,7 @@ But there's a difference between help that teaches you and help that finishes yo
 
 **A simple rule:** if you can't explain a line you're about to submit, don't submit it yet. Ask what it does first — of your mentor, of the wave-13 chat, or of the AI itself.
 
-*"I got stuck at ___ and here's what I tried"* is a great question and always worth asking.
+_"I got stuck at \_\_\_ and here's what I tried"_ is a great question and always worth asking.
 
 ---
 

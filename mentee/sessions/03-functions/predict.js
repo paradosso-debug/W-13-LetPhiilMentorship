@@ -25,8 +25,6 @@ console.log(label); //
 
 // condition1; output1 : condition2 ? output2 : fallback
 
-console.log(getLabel()); // Later
-
 function getLabel(priority) {
   if (priority === 1) {
     return "Urgent";
@@ -35,8 +33,11 @@ function getLabel(priority) {
   if (priority === 2) {
     return "Normal";
   }
+
   return "Later";
 }
+
+console.log(getLabel(3)); // Later
 
 function double(n) {
   return n * 2;
@@ -63,3 +64,9 @@ console.log(b);
 
 const triple = (i) => i * 3;
 console.log(triple(2));
+
+// const triple2 = (i) => {
+//   return i * 3;
+// };
+
+// console.log(triple2(2));
