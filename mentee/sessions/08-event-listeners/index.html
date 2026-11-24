@@ -1,18 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Session 08 — Event Listeners</title>
-  <!-- Add your own style.css here when you have one. -->
-</head>
-<body>
-  <h1>Session 08</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Session 08 — Event Listeners</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Session 08</h1>
+    <!-- Predection and parsons 1  -->
+    <h2>My Tasks</h2>
 
-  <!-- Build your page here. From session 7 the markup is part of the work:
-       a heading, something for a summary, and an empty list with an id. -->
+    <form id="task-form">
+      <input id="task-input" type="text" placeholder="Enter a task" required />
 
-  <!-- CHANGE THE FILE NAME BELOW: predict.js, parsons.js or make.js -->
-  <script src="make.js" defer></script>
-</body>
+      <select id="priority-select">
+        <option value="1">Urgent</option>
+        <option value="2">Medium</option>
+        <option value="3">Low</option>
+      </select>
+
+      <button type="submit">Add Task</button>
+    </form>
+
+    <ul id="task-list"></ul>
+
+    <button id="btn">Click Me</button>
+    <p id="message"></p>
+
+    <!-- Trace Review -->
+    <!-- <h1>Click Counter</h1>
+
+  <button id="btn">Click me</button> -->
+
+    <!-- Parsons 2 -->
+    <!-- <h1>My Tasks</h1>
+  <ul id="task-list"></ul>
+   -->
+
+    <script src="predict.js"></script>
+  </body>
 </html>

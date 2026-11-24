@@ -1,0 +1,205 @@
+/* Task Tracker
+   ------------------------------------------------------------------
+   Plain CSS — no frameworks, no build step. Every selector here is
+   something you've seen: an element, an id, or a class.
+   The colours live in one place at the top, so changing the whole
+   look means editing a few lines.                                   */
+
+:root {
+  --ink:        #0e1a2b;   /* page background      */
+  --surface:    #15263c;   /* raised panels        */
+  --line:       #23374f;   /* borders, dividers    */
+  --paper:      #e7eef6;   /* main text            */
+  --muted:      #8aa2bb;   /* secondary text       */
+  --accent:     #37d3c4;   /* the one bright colour */
+  --warn:       #f0a862;   /* status messages      */
+
+  --row-gap:    0.9rem;
+}
+
+/* ---------- page ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+  max-width: 34rem;
+
+  background-color: var(--ink);
+  color: var(--paper);
+
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+
+  /* A serif here, monospace everywhere else — the heading is a title,
+     the rows below it are data. Two jobs, two typefaces.             */
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  font-size: 2.3rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* ---------- the summary line ---------- */
+/* This is the one sentence built entirely from your data, so it gets
+   to be the loudest thing on the page.                               */
+
+#summary {
+  margin: 0 0 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+
+  color: var(--accent);
+  font-size: 1.15rem;
+}
+
+/* ---------- loading and error messages ---------- */
+
+#status {
+  margin: 0 0 1.25rem;
+  min-height: 1.6rem;       /* holds its space, so nothing jumps */
+  color: var(--warn);
+}
+
+/* ---------- the form ---------- */
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 2rem;
+}
+
+input,
+select {
+  flex: 1 1 8rem;
+  padding: 0.6rem 0.75rem;
+
+  background-color: var(--surface);
+  color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- buttons ---------- */
+
+button {
+  padding: 0.6rem 0.9rem;
+
+  background-color: transparent;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: var(--accent);
+}
+
+/* The form's own button is the main action, so it's filled in. */
+form button {
+  background-color: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+form button:hover {
+  filter: brightness(1.1);
+}
+
+/* ---------- the list ---------- */
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;        /* no bullets — the left edge marks each row */
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-bottom: var(--row-gap);
+  padding: 0.75rem 0.9rem;
+
+  background-color: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+
+/* Push every button to the right-hand end of its row. */
+li button {
+  margin-left: auto;
+  padding: 0.35rem 0.6rem;
+}
+
+li button + button {
+  margin-left: 0;          /* the second button sits beside the first */
+}
+
+/* ---------- finished items ---------- */
+/* JavaScript adds this class. CSS decides what "finished" looks like.
+   Change these few lines and every finished item changes.
+
+   Note: no line-through here. A strike set on the row would be drawn
+   across the buttons too, and a child can't cancel it — so the row
+   steps back with colour and italics instead.                        */
+
+.done,
+.paid {
+  border-left-color: var(--line);
+  background-color: transparent;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Keep the buttons fully legible on a finished row. */
+.done button,
+.paid button {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 30rem) {
+  body {
+    padding-top: 2rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  input,
+  select {
+    flex-basis: 100%;      /* one field per line */
+  }
+}
