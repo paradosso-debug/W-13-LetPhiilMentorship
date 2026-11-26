@@ -1040,6 +1040,38 @@ await axios.delete(url);
 | Send JSON        | `JSON.stringify` + header            | Pass the object                             |
 | Status code      | `response.status`                    | `response.status` / `error.response.status` |
 
+### axios: which kind of error?
+
+axios throws for a bad status **and** for no answer at all. Only the first has `error.response`:
+
+```js
+try {
+  const { data } = await axios.get(url);
+} catch (error) {
+  if (error.response) {
+    // the server answered — with a bad status
+    console.log(error.response.status); // 404, 500...
+  } else {
+    // no answer at all — offline, wrong URL, server down
+    console.log(error.message);
+  }
+}
+```
+
+Reading `error.response.status` **without** the `if` crashes on a network failure — inside your `catch`, where nothing catches it. Result: "Loading…" forever.
+
+### Getting axios: CDN vs npm
+
+|                 | CDN `<script>` tag                       | `npm install axios`                                  |
+| --------------- | ---------------------------------------- | ---------------------------------------------------- |
+| How it gets in  | Downloaded by the browser on page load   | Downloaded once into `node_modules`, listed in `package.json` |
+| In your code    | `axios` is a global — just use it        | `import axios from "axios";` at the top of the file  |
+| Needs           | Nothing                                  | Node + npm, and a build tool (React projects have one) |
+| Script order    | **Before** `app.js`, or `axios is not defined` | Not an issue                                   |
+| Used in         | This course, simple pages                | React and Node projects                              |
+
+Same `axios.get(...)` either way. `@1` in the CDN URL pins version 1, so an update can't change it under you.
+
 ### Request methods
 
 | Method          | Means                 | Example       |
@@ -1054,8 +1086,37 @@ await axios.delete(url);
 | Range | Means                      | Common                                                  |
 | ----- | -------------------------- | ------------------------------------------------------- |
 | 2xx   | Success                    | `200` OK, `201` Created                                 |
-| 4xx   | **Your** request was wrong | `400` bad request, `401` not logged in, `404` not found |
+| 4xx   | **Your** request was wrong | `400` bad request, `401` not logged in, `403` logged in but not allowed, `404` not found, `429` too many requests |
 | 5xx   | **The server** broke       | `500` server error                                      |
+
+### Reading a URL
+
+```
+https://jsonplaceholder.typicode.com/todos?userId=1&_limit=5
+└────────────── base ──────────────┘└path┘└──── query ─────┘
+```
+
+| Part  | Starts with | Does                                       | Example             |
+| ----- | ----------- | ------------------------------------------ | ------------------- |
+| Base  | `https://`  | Which server                               | `api.frankfurter.dev` |
+| Path  | `/`         | **Which thing** — a collection, or one item | `/todos`, `/todos/1` |
+| Query | `?`         | **How** — filter, limit, search, options   | `?userId=1&_limit=5` |
+
+- Query = `name=value` pairs, joined with `&`. Names come from the API's docs
+- Misspelled query name → usually **no error**, just an unexpected answer
+- Build URLs from data with a template literal: `` `${base}/todos?userId=${id}` ``
+- Text the user typed going into a URL: `encodeURIComponent(text)` makes spaces and symbols URL-safe
+
+### When a call fails
+
+| What happens                          | `fetch`                         | `axios`                 | You handle it with          |
+| ------------------------------------- | ------------------------------- | ----------------------- | --------------------------- |
+| No answer (offline, wrong domain)     | Throws                          | Throws                  | `catch`                     |
+| Answer says no (`404`, `500`)         | **Doesn't** throw               | Throws                  | `response.ok` check / `catch` |
+| Answer is empty (`200` with `[]`)     | Nothing                         | Nothing                 | Check `.length` — show a **message** |
+| Field missing (`data.rates.XYZ`)      | Nothing — it's `undefined`      | Nothing — it's `undefined` | Log the response; check before using |
+
+The bottom two rows are always yours. No library catches them.
 
 ### Loading / error pattern
 
@@ -1094,6 +1155,42 @@ Short arrow returning an object: **wrap it in `( )`**. Without them: `SyntaxErro
 ### CORS
 
 If the console mentions CORS, the API doesn't accept requests from browser pages. It's a server setting, not a bug in your code. Use a different API.
+
+### Keys and rate limits
+
+- **Never put an API key in frontend code.** Anyone can read it in DevTools. Keys live on a server
+- **Rate limit** — most free APIs cap requests per minute/hour/day. Over it: `429 Too Many Requests`
+- Shared wifi can count as one user
+- Call APIs when the user asks — **never inside `render()`**
+
+### Reading `.then()` code
+
+Older code and many tutorials use `.then()` instead of `await`. Recognise it, don't write it. These two do the same thing:
+
+```js
+fetch(url)
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
+```
+
+```js
+try {
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
+} catch (error) {
+  console.error(error);
+}
+```
+
+| `.then` style       | `async` / `await` style                   |
+| ------------------- | ----------------------------------------- |
+| `.then((x) => ...)` | `const x = await ...;` then the next line |
+| `.catch((error) => ...)` | `catch (error) { ... }`              |
+| `.finally(() => ...)` | Code after the `try`/`catch`            |
+
+Each `.then` hands its **return value** to the next. `.then((response) => { response.json(); })` — braces, no `return` — passes `undefined` along. Same trap as `map`.
 
 ---
 
@@ -1390,5 +1487,10 @@ Open it: **F12** or **Cmd+Option+J** (Mac) / **Ctrl+Shift+J** (Windows), then th
 | `axios is not defined`                                         | Script tag missing or after `app.js`                                              |
 | `.map` building objects returns `undefined`                    | Arrow returning `{}` needs `({ })`                                                |
 | "Loading…" stuck forever                                       | No `try/catch`, or status not reset                                               |
+| API call "works" but nothing appears, no error                 | Answer was empty (`[]`) — check `.length`, show a message                         |
+| `NaN` from API data                                            | Field missing or misnamed — `undefined` in maths. Log the response                |
+| `429 Too Many Requests`                                        | Rate limit — too many calls. Don't call APIs from `render()`                      |
+| `Cannot read properties of undefined (reading 'status')` in `catch` | axios network failure has no `error.response` — check it exists first        |
+| A `.then` step receives `undefined`                            | The previous `.then` used `{ }` without `return`                                  |
 | React screen doesn't update after a change                     | State was mutated (`push`, `obj.x = ...`) instead of replaced                     |
 | Changing a "copy" changed the original                         | Spread is shallow — nested objects are shared                                     |

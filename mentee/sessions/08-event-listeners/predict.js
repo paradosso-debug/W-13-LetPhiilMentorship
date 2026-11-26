@@ -2,15 +2,20 @@
 
 console.log("predict.js running");
 
-const button = document.getElementById("btn");
-const message = document.getElementById("message");
+// const button = document.getElementById("btn");
+// const message = document.getElementById("message");
 
-button.addEventListener("click", () => {
-  message.textContent = "Hello World";
-});
+// button.addEventListener("click", () => {
+//   message.textContent = "Hello World";
+// });
 
 // Warm up:
 // 1. What does `document.querySelector("#nope")` return when there's no such element?
+
+document.querySelector("#nope")
+
+
+
 // 2. `const x = ["a","b"].forEach((letter) => letter);` — what's in `x`?
 // 3. What's the difference between `greet` and `greet()`?
 // 4. Your `createTaskElement` has no `return`. What appears on the page?

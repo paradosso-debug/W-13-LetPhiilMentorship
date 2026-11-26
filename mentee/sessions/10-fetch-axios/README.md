@@ -1,9 +1,9 @@
 # Session 10 — APIs: fetch and axios
 
-**Read before class. ~15 minutes.** This is the heaviest reading in the course. Take it in two sittings if you need to.
+**Read before class. ~18 minutes.** This is the heaviest reading in the course. Take it in two sittings if you need to.
 **Two things to do at the bottom — plus the M3 API brief.**
 
-> Request methods, status codes, sending data with POST, and the full fetch/axios comparison are in `REFERENCE.md`. This file is about _time_ — the one genuinely new idea — and _the pattern for getting data from somewhere else_.
+> Request methods, status codes, sending data with POST, and the full fetch/axios comparison are in `REFERENCE.md` — so are telling axios errors apart, CDN vs `npm`, and how to read older `.then()` code. This file is about _time_ — the one genuinely new idea — and _the pattern for getting data from somewhere else_.
 
 ---
 
@@ -98,16 +98,50 @@ Two steps, two `await`s. Missing the second one is extremely common.
 
 ---
 
-## 4. When it goes wrong
+## 4. Reading an API URL
+
+Every URL in this session has the same parts:
+
+```
+https://jsonplaceholder.typicode.com/todos/1
+└────────────── base ──────────────┘└ path ┘
+
+https://jsonplaceholder.typicode.com/todos?_limit=5
+└────────────── base ──────────────┘└path┘└ query ┘
+```
+
+- **Base** — which server.
+- **Path** — which thing. `/todos` is all the todos. `/todos/1` is the todo with id 1.
+- **Query** — everything after the `?`. It doesn't change _which_ thing you asked for, only _how the answer comes back_: fewer of them, filtered, searched. It's `name=value` pairs, joined with `&`:
+
+```
+https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR
+                                      └─ one ┘ └── two ──┘
+```
+
+The names — `_limit`, `base`, `symbols` — aren't yours to choose. They come from the API's documentation. Misspell one and you usually **don't** get an error: the API ignores it, or answers something you didn't ask for. If a response looks wrong, check the URL before the code.
+
+When part of the URL comes from your data, build it with a template literal:
+
+```js
+const from = "USD";
+const to = "EUR";
+const url = `https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`;
+```
+
+---
+
+## 5. When it goes wrong
 
 Networks fail. Servers break. URLs have typos. Your code has to expect it.
 
-### Two kinds of failure
+### Three kinds of failure
 
 | What happens                 | Example                                                   | What `fetch` does                                               |
 | ---------------------------- | --------------------------------------------------------- | --------------------------------------------------------------- |
 | **No answer at all**         | User is offline, server doesn't exist, typo in the domain | **Throws an error**                                             |
 | **An answer that says "no"** | 404 not found, 500 server broke                           | **Doesn't throw.** Gives you a response as if everything's fine |
+| **An answer with nothing in it** | A search with no results: `/todos?userId=999` gives `[]` | **Nothing.** Status `200`, `response.ok` is `true` — it worked |
 
 The second row surprises everyone. A 404 still "succeeds" as far as `fetch` is concerned — a server _did_ answer; it just answered "not found." You have to check yourself:
 
@@ -137,9 +171,23 @@ Without `try/catch`, a failed request crashes your function and the user sees…
 
 This also fixes a Session 9 gap: `JSON.parse` on bad text throws. Now you know how to catch that.
 
+### The third row — nothing failed, and there's nothing there
+
+`catch` never runs for an empty answer, because nothing went wrong. The request worked; there just wasn't anything to send. axios behaves the same — no throw.
+
+So you check the **data itself**, and show a **message**, not an error:
+
+```js
+statusMessage = newTasks.length === 0 ? "No suggestions right now." : "";
+```
+
+That one line can replace `statusMessage = "";` in the project code below. Without it, the user clicks, "Loading…" disappears, and… nothing. They can't tell "nothing to show" from "the button's broken."
+
+The same goes for a **field that isn't there**. If the response has no `EUR`, then `data.rates.EUR` is `undefined` — no error — and `undefined * 20` puts `NaN` on your screen. Neither `fetch` nor axios can catch this one for you. Log the response, and check the values you rely on.
+
 ---
 
-## 5. Loading and error states are data
+## 6. Loading and error states are data
 
 While you're waiting, the user needs to see _something_. When it fails, they need to be told. Both are just more **state** — and state goes through Session 8's loop:
 
@@ -163,11 +211,11 @@ async function loadSuggestions() {
 
 The loading message isn't poked into the page directly. It's a variable, `render` displays it. **Change the data, then render** — even for "Loading…".
 
-In React, you'll write this exact pattern: a `loading` state, an `error` state, and the screen drawn from both.
+In React, you'll write this exact pattern: a `loading` state, an `error` state, and the screen drawn from both. Count the screens a user can see — loading, error, empty, and the data itself. All four are just data.
 
 ---
 
-## 6. API data is never in your shape
+## 7. API data is never in your shape
 
 Here's what JSONPlaceholder sends for a todo:
 
@@ -203,7 +251,7 @@ And the first time you use any API: **`console.log` the whole response before yo
 
 ---
 
-## 7. axios — the same job, less ceremony
+## 8. axios — the same job, less ceremony
 
 axios is a **library**: code someone else wrote that you add to your project. It does what `fetch` does, with a few annoyances removed.
 
@@ -238,6 +286,8 @@ const { data } = await axios.get(url);
 | Where the data is    | Whatever `.json()` returns              | Always `response.data`            |
 
 **The core is identical:** `async`/`await`, `try`/`catch`, loading and error states, translating the shape. axios just removes two footguns — the second `await`, and the silent 404.
+
+One side effect: because axios throws on a 404 too, your `catch` can now receive two different things — _"the server said no"_ and _"no answer at all"_. One message for both is fine. If you ever want a different message for each, `REFERENCE.md` shows how to tell them apart safely.
 
 **Why learn both?** Because you'll meet both. `fetch` is everywhere because it's built in. axios is common in React and Node codebases. Knowing what each one does _for_ you means neither is magic.
 
@@ -359,6 +409,10 @@ Look at where `loadSuggestions` sits: in **data changes**, next to `addTask` and
 | `SyntaxError: Unexpected token ':'` inside a `map`            | Short arrow returning an object without `( )` around it                            |
 | `.map` gives `undefined`s when building a one-property object | Same cause — with one property there's no error to warn you                        |
 | "Loading…" never goes away                                    | No `try/catch` — an error stopped the function before it reset the message         |
+| "Loading…" goes away, nothing appears, no error              | The API answered `200` with nothing (`[]`). Check the data, show a message         |
+| `NaN` on screen, no error                                     | A field you used isn't in the response — it's `undefined` in your maths            |
+| Worked, then fails after lots of clicks — status `429`        | Rate limit: the API caps requests. Wait, and only call it when the user asks       |
+| `Cannot read properties of undefined (reading 'status')` in a `catch` | axios network failure — there's no `error.response`. See `REFERENCE.md`  |
 
 ---
 
@@ -374,7 +428,13 @@ https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR
 
 Paste it in your browser first and look at the shape. Your job is to find the rate in the response and use it.
 
+If the rate isn't where you think it is, you won't get an error — you'll get `NaN` on screen (Section 5).
+
 You can use a different API if you prefer — it must be free, require no key, and work from the browser (no CORS error). Check with me before committing to it. Use `fetch` or `axios` — your choice, but be ready to explain how the other one would differ.
+
+**Why "no key"?** Many APIs want a **key** — a password that identifies your app. Anything in your frontend JavaScript can be read by anyone who opens DevTools, so a key in `app.js` is a key you've published. Keys belong on a server — the backend half of the course. Until then: no-key APIs only.
+
+**Free APIs have limits.** Most cap how many requests you can make per minute, hour or day. Go over and you get `429 Too Many Requests`. Shared wifi can count as one user, so a class clicking together can hit it. Call the API when the user asks — never from inside `render()`, which runs on every change.
 
 Due Session 11.
 
